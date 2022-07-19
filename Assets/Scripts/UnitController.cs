@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class UnitController : MonoBehaviour
 {
@@ -20,11 +16,11 @@ public class UnitController : MonoBehaviour
         //TODO: delete this later or maybe don't delete this
         
         //Get position on tilemap
-        currentUnitTile = (Vector2Int)MapManager.Instance.BaseMap.WorldToCell(transform.position);
+        currentUnitTile = (Vector2Int)MapData.Instance.baseMap.WorldToCell(transform.position);
         //Set position to tile in world
-        transform.position = MapManager.Instance.BaseMap.GetCellCenterWorld((Vector3Int)currentUnitTile);
+        transform.position = MapData.Instance.baseMap.GetCellCenterWorld((Vector3Int)currentUnitTile);
         
-        MapManager.Instance.SetUnit(currentUnitTile, this);
+        MapData.Instance.SetUnit(currentUnitTile, this);
     }
 
     public void SelectUnit()

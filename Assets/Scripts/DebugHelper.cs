@@ -1,18 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
 public class DebugHelper : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private bool ShowTheTileCoords = false;
 
-    // Update is called once per frame
-    void Update()
+    private void OnGUI()
     {
-        
+        if (ShowTheTileCoords)
+        {
+            for (int i = 0; i < MapData.Instance.GetMapWidth(); i++)
+            {
+                for (int j = 0; j < MapData.Instance.GetMapHeight(); j++)
+                {
+                    Handles.Label(MapData.Instance.baseMap.GetCellCenterWorld(new Vector3Int(i, j , 1)), 
+                        $"{i}:{j}");
+                }
+            }
+        }
     }
 }
+
+#endif

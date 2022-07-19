@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.WSA;
 
 public class TouchController : MonoBehaviour
 {
@@ -43,6 +39,35 @@ public class TouchController : MonoBehaviour
     //Remove this after release maybe...
     private void CheckPointInWorld()
     {
-        MapManager.Instance.ProvideClicking(_touchPosWorld);
+        Vector2Int gridPos = (Vector2Int)MapData.Instance.baseMap.WorldToCell(_touchPosWorld);
+        if (gridPos[0] < 0 || gridPos[1] < 0 
+                           || gridPos[0] >= MapData.Instance.GetMapWidth() 
+                           || gridPos[1] >= MapData.Instance.GetMapHeight()) return;
+
+        if (MapData.Instance.GetUnit(gridPos))
+        {
+            MapData.Instance.GetUnit(gridPos).SelectUnit();
+        }
+        else if (MapData.Instance.GetBuilding(gridPos))
+        {
+            //TODO: update for buildings
+        }
+        else if (GameManager.Instance.isUnitSelected)
+        {
+            //Check if we can move to this position
+            if (MapData.Instance.GetTile(gridPos) == TileCode.Ocean)//or another strange thing
+            {
+                GameManager.Instance.DeselectUnit();
+                return;
+            }
+            //TODO: add here the instruction for attacking
+            
+            //Change the unit prg pos
+            MapData.Instance.SetUnit(gridPos, GameManager.Instance.selectedUnit);
+            
+            //Move the unit
+            Vector2 worldPos = MapData.Instance.baseMap.GetCellCenterWorld((Vector3Int)gridPos);
+            GameManager.Instance.selectedUnit.MoveToPos(new float[] {worldPos[0], worldPos[1]});
+        }
     }
 }
