@@ -1,6 +1,7 @@
 using UnityEngine;
 
-[RequireComponent(typeof(MapData), typeof(MapConstructor))]
+[RequireComponent(typeof(MapData),
+                  typeof(MapConstructor))]
 public class MapManager : MonoBehaviour
 {
     [HideInInspector] 

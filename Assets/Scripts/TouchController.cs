@@ -43,6 +43,7 @@ public class TouchController : MonoBehaviour
         if (gridPos[0] < 0 || gridPos[1] < 0 
                            || gridPos[0] >= MapData.Instance.GetMapWidth() 
                            || gridPos[1] >= MapData.Instance.GetMapHeight()) return;
+        DebugHelper.Instance.ShowList(MapData.Instance.GetGraphNode(gridPos));
 
         if (MapData.Instance.GetUnit(gridPos))
         {

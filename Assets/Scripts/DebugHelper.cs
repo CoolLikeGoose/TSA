@@ -1,14 +1,57 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 #if UNITY_EDITOR
 public class DebugHelper : MonoBehaviour
 {
-    [SerializeField] private bool ShowTheTileCoords = false;
+    public static DebugHelper Instance { get; private set; }
 
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
+
+    [SerializeField] private bool showTheTileCoords = false;
+    
+    public void ShowMatrix(int[,] matrix)
+    {
+        string debugString = "";
+        for (int x = 0; x < matrix.GetLength(0); x++)
+        {
+            for (int y = 0; y < matrix.GetLength(1); y++)
+            {
+                debugString += matrix[x, y];
+            }
+
+            debugString += '\n';
+        }
+
+        Debug.Log(debugString);
+    }
+
+    public void ShowList(List<Vector2Int> list)
+    {
+        if (list == null)
+        {
+            Debug.LogWarning("List is empty");
+            return;
+        }
+        
+        string debugString = "";
+
+        foreach (Vector2Int el in list)
+        {
+            debugString += $"{el} ";
+        }
+        
+        Debug.Log(debugString);
+    }
+    
     private void OnGUI()
     {
-        if (ShowTheTileCoords)
+        if (showTheTileCoords)
         {
             for (int i = 0; i < MapData.Instance.GetMapWidth(); i++)
             {
