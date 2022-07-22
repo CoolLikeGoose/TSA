@@ -16,19 +16,19 @@ public class MapConstructor : MonoBehaviour
         {
             for (int j = 0; j < MapData.Instance.GetMapHeight(); j++)
             {
-                TileCode tileCode = GetTileCode(i, j);
-                MapData.Instance.SetTile(new Vector2Int(i, j), tileCode);
+                TerrainTileCode terrainTileCode = GetTileCode(i, j);
+                MapData.Instance.SetTile(new Vector2Int(i, j), terrainTileCode);
                 MapData.Instance.baseMap.SetTile(new Vector3Int(i, j, 0),
-                    MapData.Instance.GetTileBase(tileCode));
+                    MapData.Instance.GetLandscapeTileBase(terrainTileCode));
             }
         }
         
         CompleteGraphDependencies();
     }
     
-    private TileCode GetTileCode(int x, int y)
+    private TerrainTileCode GetTileCode(int x, int y)
     {
-        return (TileCode)UnityEngine.Random.Range(0, MapData.Instance.GetTilesCount());
+        return (TerrainTileCode)UnityEngine.Random.Range(0, MapData.Instance.GetTilesCount());
     }
 
     private void CompleteGraphDependencies()
@@ -39,7 +39,7 @@ public class MapConstructor : MonoBehaviour
             {
                 //RESTRICTION!
                 if (i == 0 && j == 0 || 
-                    MapData.Instance.GetTile(new Vector2Int(i, j)) == TileCode.Ocean) continue;
+                    MapData.Instance.GetTile(new Vector2Int(i, j)) == TerrainTileCode.Ocean) continue;
                 
                 if (i != 0 && j != 0)
                 {

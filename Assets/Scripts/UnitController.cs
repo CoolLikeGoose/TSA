@@ -3,6 +3,7 @@ using UnityEngine;
 public class UnitController : MonoBehaviour
 {
     [HideInInspector] public Vector2Int currentUnitTile;
+    public int speed = 2;
 
     private void Start()
     {
@@ -17,6 +18,26 @@ public class UnitController : MonoBehaviour
         
         //Get position on tilemap
         currentUnitTile = (Vector2Int)MapData.Instance.baseMap.WorldToCell(transform.position);
+        
+        //Really for debug
+        while (true)
+        {
+            if (MapData.Instance.GetTile(currentUnitTile) != TerrainTileCode.Ocean &&
+                MapData.Instance.GetUnit(currentUnitTile) == null) break;
+
+            currentUnitTile.x++;
+            if (currentUnitTile.x == MapData.Instance.GetMapWidth())
+            {
+                currentUnitTile.x = 0;
+                currentUnitTile.y++;
+            } 
+            else if (currentUnitTile.y == MapData.Instance.GetMapHeight())
+            {
+                currentUnitTile.y = 0;
+                currentUnitTile.x = 0;
+            }
+        }
+        
         //Set position to tile in world
         transform.position = MapData.Instance.baseMap.GetCellCenterWorld((Vector3Int)currentUnitTile);
         
@@ -25,11 +46,13 @@ public class UnitController : MonoBehaviour
 
     public void SelectUnit()
     {
-        if (GameManager.Instance.isUnitSelected) {} //TODO: Add here the delight-upping event
-        
+        if (GameManager.Instance.isUnitSelected) MapManager.Instance.DeLightUpEverything();
+
         //Debug.Log("Unit selected" + gameObject.name);
         GameManager.Instance.selectedUnit = this;
         GameManager.Instance.isUnitSelected = true;
+        
+        MapManager.Instance.SetSelectedLightUp();
     }
 
     public void MoveToPos(float[] pos)

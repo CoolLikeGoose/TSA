@@ -35,18 +35,24 @@ SpriteAtlas:
     - {fileID: 21300000, guid: 1d0a1c3520f8cd245a7930143731d4de, type: 3}
     - {fileID: 21300000, guid: e9c11f18b80452145b3f1e83162d73d8, type: 3}
     - {fileID: 21300000, guid: fa79d6852ef25314d85d6f235e9ad12d, type: 3}
+    - {fileID: 21300000, guid: 95884669d92603546aec0a48f66895e5, type: 3}
+    - {fileID: 21300000, guid: 0fbac663c0eab2c42918420a31c23332, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: 0fbac663c0eab2c42918420a31c23332, type: 3}
   - {fileID: 21300000, guid: 1d0a1c3520f8cd245a7930143731d4de, type: 3}
   - {fileID: 21300000, guid: fa79d6852ef25314d85d6f235e9ad12d, type: 3}
   - {fileID: 21300000, guid: e9c11f18b80452145b3f1e83162d73d8, type: 3}
+  - {fileID: 21300000, guid: 95884669d92603546aec0a48f66895e5, type: 3}
   m_PackedSpriteNamesToIndex:
+  - SelectedSector
   - Ocean
   - Steppe
   - Swamp
+  - LightUp
   m_RenderDataMap: {}
   m_Tag: Sprite Atlas
   m_IsVariant: 0

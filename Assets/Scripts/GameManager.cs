@@ -18,5 +18,7 @@ public class GameManager : MonoBehaviour
     {
         isUnitSelected = false;
         selectedUnit = null;
+        
+        MapManager.Instance.DeLightUpEverything();
     }
 }

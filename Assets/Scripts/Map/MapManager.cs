@@ -17,4 +17,32 @@ public class MapManager : MonoBehaviour
     {
         MapConstructor.Instance.ConstructBaseMap();
     }
+
+    public void SetSelectedLightUp()
+    {
+        Vector2Int curTile = GameManager.Instance.selectedUnit.currentUnitTile;
+        MapData.Instance.lightUpMap.SetTile(new Vector3Int(curTile.x, curTile.y, 1), 
+            MapData.Instance.GetLightUpTileBase(LightUpTileCode.CurrentSector));
+        
+        if (GameManager.Instance.isUnitSelected) LightUpPossibleMoves(curTile);
+    }
+
+    private void LightUpPossibleMoves(Vector2Int pos)
+    {
+        foreach (Vector2Int tile in MapData.Instance.GetConnectedTiles(pos, GameManager.Instance.selectedUnit.speed))
+        {
+            if (MapData.Instance.GetUnit(tile) != null) continue;
+            
+            MapData.Instance.lightUpMap.SetTile((Vector3Int)tile,
+                MapData.Instance.GetLightUpTileBase(LightUpTileCode.AvailablePath));
+        }
+    }
+
+    public void DeLightUpEverything()
+    {
+        MapData.Instance.lightUpMap.SwapTile(MapData.Instance.GetLightUpTileBase(LightUpTileCode.CurrentSector),
+            null);
+        MapData.Instance.lightUpMap.SwapTile(MapData.Instance.GetLightUpTileBase(LightUpTileCode.AvailablePath),
+            null);
+    }
 }

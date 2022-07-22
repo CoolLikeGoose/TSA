@@ -1,6 +1,12 @@
-public enum TileCode
+public enum TerrainTileCode
 {
     Steppe,
     Swamp,
     Ocean
+}
+
+public enum LightUpTileCode
+{
+    CurrentSector,
+    AvailablePath
 }

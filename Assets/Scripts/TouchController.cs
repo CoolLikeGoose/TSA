@@ -43,7 +43,7 @@ public class TouchController : MonoBehaviour
         if (gridPos[0] < 0 || gridPos[1] < 0 
                            || gridPos[0] >= MapData.Instance.GetMapWidth() 
                            || gridPos[1] >= MapData.Instance.GetMapHeight()) return;
-        DebugHelper.Instance.ShowList(MapData.Instance.GetGraphNode(gridPos));
+        //DebugHelper.Instance.ShowList(MapData.Instance.GetGraphNode(gridPos));
 
         if (MapData.Instance.GetUnit(gridPos))
         {
@@ -56,7 +56,7 @@ public class TouchController : MonoBehaviour
         else if (GameManager.Instance.isUnitSelected)
         {
             //Check if we can move to this position
-            if (MapData.Instance.GetTile(gridPos) == TileCode.Ocean)//or another strange thing
+            if (MapData.Instance.GetTile(gridPos) == TerrainTileCode.Ocean)//or another strange thing
             {
                 GameManager.Instance.DeselectUnit();
                 return;
