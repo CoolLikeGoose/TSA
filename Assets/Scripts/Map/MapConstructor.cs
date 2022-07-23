@@ -8,6 +8,9 @@ public class MapConstructor : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+        
+        //For debug
+        DontDestroyOnLoad(gameObject);
     }
     
     public void ConstructBaseMap()
@@ -28,7 +31,7 @@ public class MapConstructor : MonoBehaviour
     
     private TerrainTileCode GetTileCode(int x, int y)
     {
-        return (TerrainTileCode)UnityEngine.Random.Range(0, MapData.Instance.GetTilesCount());
+        return MapGenManager.Instance.GetTileCodeByNoise(x, y);
     }
 
     private void CompleteGraphDependencies()

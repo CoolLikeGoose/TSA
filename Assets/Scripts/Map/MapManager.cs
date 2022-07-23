@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(MapData),
-                  typeof(MapConstructor))]
+                  typeof(MapConstructor),
+                  typeof(MapGenManager))]
 public class MapManager : MonoBehaviour
 {
     [HideInInspector] 
@@ -13,7 +15,7 @@ public class MapManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    private void Start()
+    public void LoadMap()
     {
         MapConstructor.Instance.ConstructBaseMap();
     }

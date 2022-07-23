@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 #if UNITY_EDITOR
 public class DebugHelper : MonoBehaviour
@@ -14,7 +16,15 @@ public class DebugHelper : MonoBehaviour
     }
 
     [SerializeField] private bool showTheTileCoords = false;
-    
+
+    // private void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.R))
+    //     {
+    //         SceneManager.LoadScene(0);
+    //     }
+    // }
+
     public void ShowMatrix(int[,] matrix)
     {
         string debugString = "";

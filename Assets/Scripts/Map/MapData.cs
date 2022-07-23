@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -6,10 +7,10 @@ public class MapData : MonoBehaviour
 {
     public static MapData Instance { get; private set; }
 
-    [Header("Tilemaps")]
-    public Tilemap baseMap;
-    public Tilemap buildingMap;
-    public Tilemap lightUpMap;
+    //[Header("Tilemaps")]
+    [HideInInspector] public Tilemap baseMap;
+    [HideInInspector] public Tilemap buildingMap;
+    [HideInInspector] public Tilemap lightUpMap;
 
     [Header("Map settings")]
     [SerializeField] private int mapHeight;
@@ -26,7 +27,7 @@ public class MapData : MonoBehaviour
         
         InitializePublicArrays();
     }
-    
+
     public int ModifyAccessor(int accessor)
     {
         return mapHeight - 1 - accessor;
