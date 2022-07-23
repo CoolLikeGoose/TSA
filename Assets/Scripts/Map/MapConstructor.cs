@@ -8,25 +8,28 @@ public class MapConstructor : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
-        
-        //For debug
-        DontDestroyOnLoad(gameObject);
     }
     
     public void ConstructBaseMap()
     {
-        for (int i = 0; i < MapData.Instance.GetMapWidth(); i++)
+        for (int x = 0; x < MapData.Instance.GetMapWidth(); x++)
         {
-            for (int j = 0; j < MapData.Instance.GetMapHeight(); j++)
+            for (int y = 0; y < MapData.Instance.GetMapHeight()/2; y++)
             {
-                TerrainTileCode terrainTileCode = GetTileCode(i, j);
-                MapData.Instance.SetTile(new Vector2Int(i, j), terrainTileCode);
-                MapData.Instance.baseMap.SetTile(new Vector3Int(i, j, 0),
-                    MapData.Instance.GetLandscapeTileBase(terrainTileCode));
+                TerrainTileCode terrainTileCode = GetTileCode(x, y);
+                ProcessTile(x, y, terrainTileCode);
+                ProcessTile(x, MapData.Instance.GetMapHeight() - y - 1, terrainTileCode);
             }
         }
         
         CompleteGraphDependencies();
+    }
+
+    private void ProcessTile(int x, int y, TerrainTileCode terrainTileCode)
+    {
+        MapData.Instance.SetTile(new Vector2Int(x, y), terrainTileCode);
+        MapData.Instance.baseMap.SetTile(new Vector3Int(x, y, 0),
+            MapData.Instance.GetLandscapeTileBase(terrainTileCode));
     }
     
     private TerrainTileCode GetTileCode(int x, int y)
