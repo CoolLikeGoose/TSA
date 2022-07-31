@@ -16,28 +16,17 @@ public class TouchController : MonoBehaviour
         {
             _touchPosWorld = _mainCamera.ScreenToWorldPoint(Input.GetTouch(0).position);
             
-            CheckPointInWorld();
-            // RaycastHit2D hit = Physics2D.Raycast(_touchPosWorld, Camera.main.transform.forward);
-            //
-            // if (hit.collider != null)
-            // {
-            //     GameObject touchedObj = hit.transform.gameObject;
-            //
-            //     if (touchedObj.CompareTag("Units")) 
-            //         touchedObj.GetComponent<UnitController>().SelectUnit();
-            //     else if (touchedObj.CompareTag("Tile") && GameManager.Instance.isUnitSelected) 
-            //         touchedObj.GetComponent<TileController>().SelectTile();
-            // }
+            ProcessPoint();
         }
         else if (Input.GetMouseButtonUp(0))
         {
             _touchPosWorld = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            CheckPointInWorld();
+            ProcessPoint();
         }
     }
     
     //Remove this after release maybe...
-    private void CheckPointInWorld()
+    private void ProcessPoint()
     {
         Vector2Int gridPos = (Vector2Int)MapData.Instance.baseMap.WorldToCell(_touchPosWorld);
         if (gridPos[0] < 0 || gridPos[1] < 0 

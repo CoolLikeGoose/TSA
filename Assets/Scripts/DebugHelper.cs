@@ -9,21 +9,34 @@ public class DebugHelper : MonoBehaviour
 {
     public static DebugHelper Instance { get; private set; }
 
+    [Header("MapDebugging")]
+    [Header("Perlin noise")]
+    [Range(4.0f, 20.0f)] [Tooltip("Change the amount of islands")]
+    public float magnification = 7.0f;
+
+    [Range(20f, 45f)] [Tooltip("Change the average hikes")]
+    public float maxHikes = 50f;
+    
+    [Header("Voronoi noise")]
+    public int detalization;
+    
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+        
+        DontDestroyOnLoad(gameObject);
     }
 
     [SerializeField] private bool showTheTileCoords = false;
 
-    // private void Update()
-    // {
-    //     if (Input.GetKeyDown(KeyCode.R))
-    //     {
-    //         SceneManager.LoadScene(0);
-    //     }
-    // }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(0);
+        }
+    }
 
     public void ShowMatrix(int[,] matrix)
     {
@@ -61,15 +74,13 @@ public class DebugHelper : MonoBehaviour
     
     private void OnGUI()
     {
-        if (showTheTileCoords)
+        if (!showTheTileCoords) return;
+        for (int i = 0; i < MapData.Instance.GetMapWidth(); i++)
         {
-            for (int i = 0; i < MapData.Instance.GetMapWidth(); i++)
+            for (int j = 0; j < MapData.Instance.GetMapHeight(); j++)
             {
-                for (int j = 0; j < MapData.Instance.GetMapHeight(); j++)
-                {
-                    Handles.Label(MapData.Instance.baseMap.GetCellCenterWorld(new Vector3Int(i, j , 1)), 
-                        $"{i}:{j}");
-                }
+                Handles.Label(MapData.Instance.baseMap.GetCellCenterWorld(new Vector3Int(i, j , 1)), 
+                    $"{i}:{j}");
             }
         }
     }

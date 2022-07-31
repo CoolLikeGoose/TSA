@@ -12,6 +12,8 @@ public class MapConstructor : MonoBehaviour
     
     public void ConstructBaseMap()
     {
+        MapGenManager.Instance.InitializeGenerationDependencies();
+            
         for (int x = 0; x < MapData.Instance.GetMapWidth(); x++)
         {
             for (int y = 0; y < MapData.Instance.GetMapHeight()/2; y++)
@@ -23,8 +25,10 @@ public class MapConstructor : MonoBehaviour
         }
         
         CompleteGraphDependencies();
+        MapGenManager.Instance.ShowDebugDiagram();
     }
 
+    //Add tile to array and set to field
     private void ProcessTile(int x, int y, TerrainTileCode terrainTileCode)
     {
         MapData.Instance.SetTile(new Vector2Int(x, y), terrainTileCode);
@@ -34,7 +38,7 @@ public class MapConstructor : MonoBehaviour
     
     private TerrainTileCode GetTileCode(int x, int y)
     {
-        return MapGenManager.Instance.GetTileCodeByNoise(x, y);
+        return MapGenManager.Instance.GetProceduralTileCode(x, y);
     }
 
     private void CompleteGraphDependencies()
