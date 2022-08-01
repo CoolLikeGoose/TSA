@@ -1,6 +1,6 @@
-using System;
+using TMPro;
 using UnityEngine;
-using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     //Unit controller
     [HideInInspector] public bool isUnitSelected;
     [HideInInspector] public UnitController selectedUnit;
+    
+    public TextMeshProUGUI fpsLabel;
 
     private void Awake()
     {
@@ -18,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        DebugHelper.Instance.InitializeDestroyed();
         MapManager.Instance.LoadMap();
     }
 
@@ -27,5 +30,10 @@ public class GameManager : MonoBehaviour
         selectedUnit = null;
         
         MapManager.Instance.DeLightUpEverything();
+    }
+    
+    public void ReloadScene()
+    {
+        DebugHelper.ReloadScene();
     }
 }

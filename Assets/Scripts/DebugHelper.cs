@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-#if UNITY_EDITOR
 public class DebugHelper : MonoBehaviour
 {
     public static DebugHelper Instance { get; private set; }
@@ -19,6 +18,10 @@ public class DebugHelper : MonoBehaviour
     
     [Header("Voronoi noise")]
     public int detalization;
+
+    [Header("FPS")] 
+    private TextMeshProUGUI fpsLabel;
+    private float _fps;
     
     private void Awake()
     {
@@ -28,14 +31,34 @@ public class DebugHelper : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    [SerializeField] private bool showTheTileCoords = false;
+    private void Start()
+    {
+        InitializeDestroyed();
+    }
+
+    public void InitializeDestroyed()
+    {
+        fpsLabel = GameManager.Instance.fpsLabel;
+    }
+
+    //[SerializeField] private bool showTheTileCoords = false;
+    private float _deltatime = 0;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene(0);
+            ReloadScene();
         }
+        
+        _deltatime += (Time.deltaTime - _deltatime) * .1f;
+        _fps = 1.0f / _deltatime;
+        fpsLabel.SetText(Mathf.Ceil(_fps).ToString());
+    }
+    
+    public static void ReloadScene()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public void ShowMatrix(int[,] matrix)
@@ -72,18 +95,16 @@ public class DebugHelper : MonoBehaviour
         Debug.Log(debugString);
     }
     
-    private void OnGUI()
-    {
-        if (!showTheTileCoords) return;
-        for (int i = 0; i < MapData.Instance.GetMapWidth(); i++)
-        {
-            for (int j = 0; j < MapData.Instance.GetMapHeight(); j++)
-            {
-                Handles.Label(MapData.Instance.baseMap.GetCellCenterWorld(new Vector3Int(i, j , 1)), 
-                    $"{i}:{j}");
-            }
-        }
-    }
+    // private void OnGUI()
+    // {
+    //     if (!showTheTileCoords) return;
+    //     for (int i = 0; i < MapData.Instance.GetMapWidth(); i++)
+    //     {
+    //         for (int j = 0; j < MapData.Instance.GetMapHeight(); j++)
+    //         {
+    //             Handles.Label(MapData.Instance.baseMap.GetCellCenterWorld(new Vector3Int(i, j , 1)), 
+    //                 $"{i}:{j}");
+    //         }
+    //     }
+    // }
 }
-
-#endif

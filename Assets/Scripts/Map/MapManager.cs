@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MapData),
@@ -9,6 +9,8 @@ public class MapManager : MonoBehaviour
     [HideInInspector] 
     public static MapManager Instance { get; private set; }
 
+    [HideInInspector] public HashSet<Vector2Int> avaiblePaths;
+    
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -31,7 +33,8 @@ public class MapManager : MonoBehaviour
 
     private void LightUpPossibleMoves(Vector2Int pos)
     {
-        foreach (Vector2Int tile in MapData.Instance.GetConnectedTiles(pos, GameManager.Instance.selectedUnit.speed))
+        avaiblePaths = MapData.Instance.GetConnectedTiles(pos, GameManager.Instance.selectedUnit.speed);
+        foreach (Vector2Int tile in avaiblePaths)
         {
             if (MapData.Instance.GetUnit(tile) != null) continue;
             

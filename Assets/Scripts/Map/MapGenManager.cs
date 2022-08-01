@@ -1,8 +1,5 @@
-using System;
 using System.Linq;
-using UnityEditor.UI;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class MapGenManager : MonoBehaviour
 {
@@ -28,6 +25,8 @@ public class MapGenManager : MonoBehaviour
     
     private int _biasX = 0;
     private int _biasY = 0;
+    
+    
 
     private void Awake()
     {
@@ -45,7 +44,6 @@ public class MapGenManager : MonoBehaviour
         detalization = DebugHelper.Instance.detalization;
         InitializeVoronoiDiagram();
         CheckValidOfPerlin();
-        
     }
 
     public TerrainTileCode GetProceduralTileCode(int x, int y)
@@ -69,7 +67,6 @@ public class MapGenManager : MonoBehaviour
     {
         if (GetValidInPercentage() < 15)
         {
-            Debug.Log("The map was reworked");
             _biasX = Random.Range(-1_000_000, 1_000_000);
             _biasY = Random.Range(-1_000_000, 1_000_000);
             CheckValidOfPerlin();
