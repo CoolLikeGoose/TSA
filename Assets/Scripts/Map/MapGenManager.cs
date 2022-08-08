@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapGenManager : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class MapGenManager : MonoBehaviour
     private int _tilesCount;
     private Vector2[] _focalPoints;
     private Color[] _pixelColors;
-    [SerializeField] private GameObject outputQuad;
+    [SerializeField] private Image outputImage;
 
     private int _mapHeight;
     private int _mapWidth;
@@ -134,8 +135,11 @@ public class MapGenManager : MonoBehaviour
         Texture2D newTexture2D = new Texture2D(_mapWidth, _mapHeight);
         newTexture2D.SetPixels(_pixelColors);
         newTexture2D.Apply();
-        outputQuad.GetComponent<Renderer>().material.mainTexture = newTexture2D;
-        outputQuad.transform.localScale = new Vector3(_mapWidth / 2f, _mapHeight / 2f, 1);
+        outputImage.sprite = Sprite.Create(
+            newTexture2D, 
+            new Rect(0, 0, newTexture2D.width, newTexture2D.height),
+            new Vector2(.5f, .5f));
+        outputImage.transform.localScale = new Vector3(_mapWidth / 8f, _mapHeight / 8f, 1);
     }
 
     //Legacy

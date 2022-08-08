@@ -9,7 +9,7 @@ public class MapManager : MonoBehaviour
     [HideInInspector] 
     public static MapManager Instance { get; private set; }
 
-    [HideInInspector] public HashSet<Vector2Int> avaiblePaths;
+    [HideInInspector] public List<Vector2Int> availablePaths;
     
     private void Awake()
     {
@@ -33,12 +33,12 @@ public class MapManager : MonoBehaviour
 
     private void LightUpPossibleMoves(Vector2Int pos)
     {
-        avaiblePaths = MapData.Instance.GetConnectedTiles(pos, GameManager.Instance.selectedUnit.speed);
-        foreach (Vector2Int tile in avaiblePaths)
+        availablePaths = MapData.Instance.GetConnections(pos, GameManager.Instance.selectedUnit.speed);
+        for (int i = 0; i < availablePaths.Count; i++)    
         {
-            if (MapData.Instance.GetUnit(tile) != null) continue;
+            if (MapData.Instance.GetUnit(availablePaths[i]) != null) continue;
             
-            MapData.Instance.lightUpMap.SetTile((Vector3Int)tile,
+            MapData.Instance.lightUpMap.SetTile((Vector3Int)availablePaths[i],
                 MapData.Instance.GetLightUpTileBase(LightUpTileCode.AvailablePath));
         }
     }

@@ -148,7 +148,7 @@ public class TouchController : MonoBehaviour
         else if (GameManager.Instance.isUnitSelected)
         {
             //Check if we can move to this position
-            if (!MapManager.Instance.avaiblePaths.Contains(gridPos))//or another strange thing
+            if (!MapManager.Instance.availablePaths.Contains(gridPos))//or another strange thing
             {
                 GameManager.Instance.DeselectUnit();
                 return;
